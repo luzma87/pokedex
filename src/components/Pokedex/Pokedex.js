@@ -608,6 +608,10 @@ const KeyPadButton = styled.div`
   background: #28aafe;
   border: solid 1px ${screenColor};
   box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
   &:nth-child(1) {
     border-radius: ${radius / 2}px 0 0 0;
   }
