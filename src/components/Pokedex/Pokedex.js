@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from '@emotion/styled'
+import { keyframes } from '@emotion/core';
 
 const getSmallLightGradient = (color) => {
   let init = 'hotpink';
@@ -50,6 +51,12 @@ const darkBodyColor = '#ad162f';
 const innerBordersColor = '#960c23';
 const screenColor = '#232323';
 const screenBorderColor = '#dedede';
+
+const blink = keyframes`
+  0% {background: ${screenColor}}
+  50% {background: #37ff00}
+  100% {background: ${screenColor}}
+`;
 
 const Container = styled.div`
   margin:40px;
@@ -334,6 +341,18 @@ const ScreenMain = styled.div`
   left: 11%;
   top: 10%;
   border-radius: ${radius / 2}px;
+  color: #37ff00;
+  font-size: 22px;
+  font-family: 'VT323', 'Courier New', Courier, monospace;
+  padding: 8px;
+  &:after {
+    content: ' ';
+    position: absolute;
+    background: lime;
+    animation: ${blink} 0.8s infinite;
+    width: 7px;
+    height: 15px;
+  }
 `;
 
 const SmallScreenButtons = styled.div`
@@ -582,7 +601,7 @@ const MainBodyRightContainer = styled.div`
   height: 75%;
 `;
 
-const ScreenRight = styled.input`
+const ScreenRight = styled.div`
   margin-left: 5%;
   width: 90%;
   height: 80px;
@@ -591,6 +610,17 @@ const ScreenRight = styled.input`
   background: ${screenColor};
   box-shadow: inset 1px 1px 0px 0px rgba(0,0,0,0.5);
   color: #37ff00;
+  font-size: 22px;
+  font-family: 'VT323', 'Courier New', Courier, monospace;
+  padding: 8px;
+  &:after {
+    content: ' ';
+    position: absolute;
+    background: lime;
+    animation: ${blink} 0.8s infinite;
+    width: 7px;
+    height: 15px;
+  }
 `;
 
 const KeyPad = styled.div`
