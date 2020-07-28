@@ -145,6 +145,33 @@ const MainLight2 = styled.div`
   }
 `;
 
+const MainLightOpt2 = styled.div`
+  width: 75px;
+  height: 75px;
+  background: #FFF;
+  position: absolute;
+  top: 5%;
+  left:20px;
+  border-radius: 100%;
+  border: solid 2px ${screenColor};
+  z-index: 12;
+  &:before {
+    content: '';
+    width: 80%;
+    height: 80%;
+    top: 2%;
+    right: 4%;
+    position: absolute;
+    background: #2AA9FD;
+    background:  radial-gradient(circle at 35% 30%,
+                      #a2d9fe 2%,
+                      #28aaff 18%,
+                      #19699e 44%);
+    border-radius: 100%;
+    border: solid 2px ${screenColor};
+  }
+`;
+
 const LightsTrio = styled.div`
   position: absolute;
   display: flex;
@@ -324,6 +351,7 @@ const SmallScreenButton = styled.div`
   height: 10px;
   border-radius: 100%;
   border: solid 1px ${innerBordersColor};
+  box-shadow: 1px 1px 3px 0px rgba(0,0,0,0.75);
   &:first-child {
     margin-right: 30px;
   }
@@ -345,6 +373,7 @@ const BottomScreenButton = styled.div`
   width: 23px;
   height: 23px;
   border: solid 2px ${innerBordersColor};
+  box-shadow: 1px 1px 4px 0px rgba(0,0,0,0.75);
 `;
 
 const Speaker = styled.div`
@@ -376,7 +405,7 @@ const RoundButton = styled.div`
   background: ${screenColor};
   border-radius: 100%;
   border: solid 2px #000;
-  box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.3);
+  box-shadow: 1px 1px 2px 0px rgba(0,0,0,0.75);
 `;
 
 const CenterButtons = styled.div`
@@ -395,7 +424,7 @@ const LongButton = styled.div`
   background: ${(props) => props.color};
   border-radius: 10px;
   border: solid 1px ${screenColor};
-  box-shadow: 1px 1px 1px 0px rgba(0,0,0,0.3);
+  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.4);
   &:first-child {
     margin-right: 15px;
   }
@@ -668,6 +697,7 @@ const Pokedex = () => {
           <MainLight>
             <MainLight2 />
           </MainLight>
+          <MainLightOpt2 />
           <LightsTrio>
             <SmallLight color="red" />
             <SmallLight color="yellow" />
