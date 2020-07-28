@@ -1,5 +1,4 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from '@emotion/styled'
 
 const getSmallLightGradient = (color) => {
@@ -53,14 +52,17 @@ const screenColor = '#232323';
 const screenBorderColor = '#dedede';
 
 const Container = styled.div`
-  padding:40px;
+  margin:40px;
+  position: relative;
+  width: ${width * 2 + 60}px;
+  height: ${fullHeight}px;
 `;
 
-const MainBody = styled.div`
+const MainBodyLeft = styled.div`
   width: ${width}px;
   height: ${fullHeight}px;
   background: ${bodyColor};
-  position: relative;
+  position: absolute;
   border-radius: ${radius}px;
   z-index: 1;
   &:before {
@@ -270,6 +272,7 @@ const Hinges = styled.div`
     background: ${darkBodyColor};
     border-radius: 100%;
     border: solid 2px ${innerBordersColor};
+    z-index: 8;
   }
 `;
 
@@ -282,6 +285,7 @@ const ScreenBorder = styled.div`
   left: 5%;
   border: solid 2px ${innerBordersColor};
   border-radius: ${radius / 2}px ${radius / 2}px ${radius / 2}px ${radius * 4}px;
+  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.45);
   &:before {
     content: '';
     position: absolute;
@@ -442,10 +446,224 @@ const DPad = styled.div`
   }
 `;
 
-const Pokedex = props => {
+const MainBodyRight = styled.div`
+  width: ${width}px;
+  height: ${lidSmallestHeight}px;
+  background: ${bodyColor};
+  position:absolute;
+  left: 0;
+  bottom: 10px;
+  border: solid 2px ${innerBordersColor};
+  border-radius: 0 ${radius / 2}px ${radius / 2}px 0;
+  z-index: 2;
+  &:before {
+    content: '';
+    width: ${(width * 0.9) * 0.4 - 2}px;
+    height: ${lidFullHeight - lidSmallestHeight - 2}px;
+    border:solid 2px ${innerBordersColor};
+    border-bottom: solid 2px ${bodyColor};
+    position: absolute;
+    z-index: 4;
+    top: -${lidFullHeight - lidSmallestHeight + 2}px;
+    left: -2px;
+    background: ${bodyColor};
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    background: ${bodyColor};
+    top: -${lidFullHeight - lidSmallestHeight + 2}px;
+    left: ${(width * 0.9) * 0.4 - 53}px;
+    width: 100px;
+    height: ${lidFullHeight - lidSmallestHeight}px;
+    transform: skew(30deg);
+    border-radius: 0 ${radius - 3}px 0 0;
+    z-index:5;
+    border: solid 2px ${innerBordersColor};
+    border-bottom: solid 2px ${bodyColor};
+    border-left: none;
+  }
+`;
+
+const MainBodyRightBorders = styled.div`
+  width: ${width + 4}px;
+  height: ${lidSmallestHeight - radius + 12}px;
+  background: ${darkBodyColor};
+  position:absolute;
+  left: ${width + 22}px;
+  bottom: 2px;
+  border-radius: 0 0 ${radius}px 0;
+  &:before {
+    content: '';
+    width: 25px;
+    height: 15px;
+    background: ${darkBodyColor};
+    position: absolute;
+    right: 4px;
+    top:-14px;
+    transform: skew(45deg);
+    border-radius: ${radius}px;
+  }
+`;
+
+const MainBodyRightInner = styled.div`
+  width: ${width - 13}px;
+  height: ${lidSmallestHeight - 13}px;
+  background: ${bodyColor};
+  position:absolute;
+  left: 5px;
+  bottom: 5px;
+  border: solid 2px ${innerBordersColor};
+  border-radius: 0 ${radius / 2}px ${radius / 2}px 0;
+  z-index: 7;
+  &:before {
+    content: '';
+    width: ${(width * 0.9) * 0.4 - 2}px;
+    height: ${lidFullHeight - lidSmallestHeight - 2}px;
+    border:solid 2px ${innerBordersColor};
+    border-bottom: solid 2px ${bodyColor};
+    position: absolute;
+    z-index: 4;
+    top: -${lidFullHeight - lidSmallestHeight + 2}px;
+    left: -2px;
+    background: ${bodyColor};
+  }
+  &:after {
+    content: '';
+    position: absolute;
+    background: ${bodyColor};
+    top: -${lidFullHeight - lidSmallestHeight + 2}px;
+    left: ${(width * 0.9) * 0.4 - 63}px;
+    width: 100px;
+    height: ${lidFullHeight - lidSmallestHeight}px;
+    transform: skew(30deg);
+    border-radius: 0 ${radius - 3}px 0 0;
+    z-index:5;
+    border: solid 2px ${innerBordersColor};
+    border-bottom: solid 2px ${bodyColor};
+    border-left: none;
+  }
+`;
+
+const MainBodyRightContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  margin-top: 12%;
+  height: 75%;
+`;
+
+const ScreenRight = styled.input`
+  margin-left: 5%;
+  width: 90%;
+  height: 80px;
+  border-radius: ${radius / 2}px;
+  border: solid 2px #000;
+  background: ${screenColor};
+  box-shadow: inset 1px 1px 0px 0px rgba(0,0,0,0.5);
+  color: #37ff00;
+`;
+
+const KeyPad = styled.div`
+  background: orange;
+  display: grid;
+  border-radius: ${radius / 2}px;
+  grid-template-columns: repeat(5, 1fr);
+
+  width: 90%;
+  margin-left: 5%;
+  height: 60px;
+`;
+
+const KeyPadButton = styled.div`
+  background: #28aafe;
+  border: solid 1px ${screenColor};
+  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.3);
+  &:nth-child(1) {
+    border-radius: ${radius / 2}px 0 0 0;
+  }
+  &:nth-child(5) {
+    border-radius: 0 ${radius / 2}px 0 0;
+  }
+  &:nth-child(6) {
+    border-radius: 0 0 0 ${radius / 2}px;
+  }
+  &:nth-child(10) {
+    border-radius: 0 0 ${radius / 2}px 0;
+  }
+`;
+
+const LongButtonsRight = styled.div`
+  display: flex;
+  width: 90%;
+  margin-left: 5%;
+  justify-content: flex-end;
+`;
+
+const MoreButtons = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin-left: 5%;
+`;
+
+const WhiteButtons = styled.div`
+  display: flex;
+  border-radius: ${radius / 4}px;
+  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.75);
+  background: green;
+`;
+
+const WhiteButton = styled.div`
+  width: 50px;
+  height: 40px;
+  background: ${screenBorderColor};
+  border: solid 1px ${screenColor};
+  &:first-child {
+    border-radius: ${radius / 4}px 0 0 ${radius / 4}px;
+  }
+  &:last-child {
+    border-radius: 0 ${radius / 4}px ${radius / 4}px 0;
+    border-left: none;
+  }
+`;
+
+const YellowButton = styled.div`
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background: #a08b0a;
+  background:  radial-gradient(circle at 35% 40%,
+                      #fff5bf 2%,
+                      #fedf19 18%,
+                      #a08b0a 44%);
+  border: 1px solid ${screenColor};
+  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.5);
+`;
+
+const LastButtons = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 90%;
+  margin-left: 5%;
+`;
+
+const LongRectButton = styled.div`
+  background: ${screenColor};
+  width: 46%;
+  height: 50px;
+  border-radius: ${radius / 2}px;
+  border: solid 1px black;
+  box-shadow: 2px 2px 2px 0px rgba(0,0,0,0.5);
+`;
+
+
+const Pokedex = () => {
   return (
     <Container>
-      <MainBody>
+      <MainBodyLeft>
         <MainBodyBorders>
           <MainLight>
             <MainLight2 />
@@ -486,7 +704,43 @@ const Pokedex = props => {
           </MainContentOuter>
           <Hinges />
         </MainBodyBorders>
-      </MainBody>
+      </MainBodyLeft>
+      <MainBodyRightBorders>
+        <MainBodyRight>
+          <MainBodyRightInner>
+            <MainBodyRightContainer>
+              <ScreenRight />
+              <KeyPad>
+                <KeyPadButton>abc</KeyPadButton>
+                <KeyPadButton>def</KeyPadButton>
+                <KeyPadButton>ghi</KeyPadButton>
+                <KeyPadButton>jkl</KeyPadButton>
+                <KeyPadButton>mno</KeyPadButton>
+                <KeyPadButton>pqrs</KeyPadButton>
+                <KeyPadButton>tuv</KeyPadButton>
+                <KeyPadButton>wxyz</KeyPadButton>
+                <KeyPadButton>_</KeyPadButton>
+                <KeyPadButton>.,?</KeyPadButton>
+              </KeyPad>
+              <LongButtonsRight>
+                <LongButton color={screenColor} />
+                <LongButton color={screenColor} />
+              </LongButtonsRight>
+              <MoreButtons>
+                <WhiteButtons>
+                  <WhiteButton />
+                  <WhiteButton />
+                </WhiteButtons>
+                <YellowButton />
+              </MoreButtons>
+              <LastButtons>
+                <LongRectButton />
+                <LongRectButton />
+              </LastButtons>
+            </MainBodyRightContainer>
+          </MainBodyRightInner>
+        </MainBodyRight>
+      </MainBodyRightBorders>
     </Container>
   )
 }
